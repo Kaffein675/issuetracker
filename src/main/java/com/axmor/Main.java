@@ -1,28 +1,35 @@
 package com.axmor;
 
 
+import com.axmor.db.Db_operations;
 import spark.ModelAndView;
-import spark.Request;
-import spark.Response;
 import spark.template.velocity.VelocityTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.*;
+import static spark.Spark.exception;
+import static spark.Spark.port;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
 
 public class Main {
 
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args){
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         port(80);
         enableDebugScreen();
-
-        get("/", (Request req, Response res) -> renderIndex());
+        try {
+            Db_operations.db_connect();
+            Db_operations.db_create_issue("title","description");
+            Db_operations.db_disconnect();
+        }catch (SQLException sqlEx) {
+        sqlEx.printStackTrace();
+    } catch (ClassNotFoundException classEx){
+            classEx.printStackTrace();
+        }
     }
 
 

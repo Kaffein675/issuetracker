@@ -1,19 +1,19 @@
 CREATE TABLE issues(
-    issue_uuid uuid primary key,
+    issue_id int primary key AUTO_INCREMENT,
     title varchar(255) not null,
     discription text,
     publishing_date date
 );
 
 CREATE TABLE comments (
-    comment_uuid uuid primary key,
-    issue_uuid uuid references issues(issue_uuid),
+    comment_id int primary key AUTO_INCREMENT,
+    issue_id int references issues(issue_id),
     author varchar(255),
     content text,
     submission_date date
 );
 
 CREATE TABLE issue_status (
-    issue_uuid uuid references issues(issue_uuid),
+    issue_id int references issues(issue_id),
     status varchar(255)
 );
