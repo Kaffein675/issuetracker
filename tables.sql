@@ -18,3 +18,10 @@ CREATE TABLE issue_status (
     issue_id int references issues(issue_id),
     status varchar(255)
 );
+
+CREATE TABLE users (
+    user_id int primary key AUTO_INCREMENT,
+    user_name varchar(255),
+    salt varchar(255),
+    hash_pass varchar(255)
+);

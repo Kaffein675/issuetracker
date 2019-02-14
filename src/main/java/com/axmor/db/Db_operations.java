@@ -1,6 +1,10 @@
 package com.axmor.db;
 
+import com.axmor.db.model.Issue_model;
+import com.axmor.db.model.Status_model;
+
 import java.sql.*;
+import java.util.List;
 
 public class Db_operations {
 
@@ -25,10 +29,33 @@ public class Db_operations {
         System.out.println("Successful");
     }
 
-    public static void db_get_all_issues() throws SQLException {
+    public static List<Issue_model> db_get_all_issues() throws SQLException {
         String query = "SELECT * FROM ISSUES";
         stmt = conn.prepareStatement(query);
-        stmt.executeUpdate();
+        ResultSet rs = stmt.executeQuery();
+        List <Issue_model> issues = null;
+        Issue_model issue = null;
+        while(rs.next()){
+            issue.setId(rs.getInt("ISSUE_ID"));
+            issue.setTitle(rs.getString("TITLE"));
+            issue.setDescription(rs.getString("DESCRIPTION"));
+            issue.setDate(rs.getDate("PUBLISHING_DATE"));
+            issue.setStatus(db_get_status(rs.getInt("ISSUE_id")).getStatus());
+            issues.add(issue);
+        }
+        return issues;
+    }
+
+    private static Status_model db_get_status(int issue_id)throws SQLException{
+        String query = "SELECT * FROM ISSUE_STATUS where ISSUE_ID =?";
+        stmt = conn.prepareStatement(query);
+        stmt.setInt(1, issue_id);
+        ResultSet rs = stmt.executeQuery();
+        Status_model status = null;
+        status.setStatus_id(rs.getInt("STATUS_ID "));
+        status.setStatus(rs.getString("STATUS"));
+        status.setIssue_id(issue_id);
+        return status;
     }
 
     public static void db_get_all_comments() throws SQLException {
