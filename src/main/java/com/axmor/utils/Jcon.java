@@ -3,7 +3,7 @@ package com.axmor.utils;
 import com.fasterxml.jackson.databind.*;
 import java.io.*;
 
-public class JconUtil {
+public class Jcon {
     public static String dataToJson(Object data) {
         try {
             ObjectMapper mapper = new ObjectMapper();

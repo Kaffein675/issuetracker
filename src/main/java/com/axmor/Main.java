@@ -5,7 +5,6 @@ import com.axmor.db.Db_operations;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,15 +20,9 @@ public class Main {
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         port(80);
         enableDebugScreen();
-        try {
-            Db_operations.db_connect();
-            Db_operations.db_create_issue("title","description");
-            Db_operations.db_disconnect();
-        }catch (SQLException sqlEx) {
-        sqlEx.printStackTrace();
-    } catch (ClassNotFoundException classEx){
-            classEx.printStackTrace();
-        }
+        Db_operations.db_connect();
+        Db_operations.db_createIssue("title","description");
+        Db_operations.db_disconnect();
     }
 
 
