@@ -13,7 +13,7 @@ public class Comment_model {
     public int setId(int id){
         return this.comment_id = id;
     }
-    public int setPost_id(int post_id){
+    public int setIssue_id(int post_id){
         return this.post_id = post_id;
     }
     public String setAuthor(String author){

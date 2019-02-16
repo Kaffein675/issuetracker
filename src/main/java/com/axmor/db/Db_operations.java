@@ -1,5 +1,6 @@
 package com.axmor.db;
 
+import com.axmor.db.model.Comment_model;
 import com.axmor.db.model.Issue_model;
 import com.axmor.db.model.Status_model;
 import com.axmor.db.model.User;
@@ -23,10 +24,8 @@ public class Db_operations {
             System.out.println("Connecting to database...");
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
             System.out.println("Success");
-        } catch (SQLException sqlEx) {
+        } catch (SQLException | ClassNotFoundException sqlEx) {
             sqlEx.printStackTrace();
-        } catch (ClassNotFoundException classEx) {
-            classEx.printStackTrace();
         }
     }
 
@@ -41,7 +40,7 @@ public class Db_operations {
         }
     }
 
-    public static List<Issue_model> db_getAllIssues() {
+    public static List<Issue_model> db_getAllIssues(){
         try {
             String query = "SELECT * FROM ISSUES";
             stmt = conn.prepareStatement(query);
@@ -61,6 +60,11 @@ public class Db_operations {
             sqlEx.printStackTrace();
             return null;
         }
+        catch(NullPointerException e)
+        {
+            System.out.print("NullPointerException Caught");
+            return null;
+        }
     }
 
     private static Status_model db_getStatus(int issue_id) {
@@ -78,26 +82,63 @@ public class Db_operations {
             sqlEx.printStackTrace();
             return null;
         }
-    }
-
-    public static void db_getAllComments() {
-        try {
-            String query = "SELECT * FROM comments";
-            stmt = conn.prepareStatement(query);
-            stmt.executeUpdate();
-        } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
+        catch(NullPointerException e)
+        {
+            System.out.print("NullPointerException Caught");
+            return null;
         }
     }
 
-    public static void db_getIssue(int issue_id) {
+    public static List<Comment_model> db_getAllComments(int id) {
+        try {
+            String query = "SELECT * FROM comments where ISSUE_ID=?";
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+            ResultSet rs = stmt.executeQuery();
+            List<Comment_model> comments = null;
+            Comment_model comment = null;
+            while (rs.next()) {
+                comment.setId(rs.getInt("ISSUE_ID"));
+                comment.setIssue_id(rs.getInt("ISSUE_ID"));
+                comment.setAuthor(rs.getString("AUTHOR"));
+                comment.setDate(rs.getDate("PUBLISHING_DATE"));
+                comment.setContent(rs.getString("CONTENT"));
+                comments.add(comment);
+            }
+            return comments;
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+            return null;
+        }
+        catch(NullPointerException e)
+        {
+            System.out.print("NullPointerException Caught");
+            return null;
+        }
+    }
+
+    public static Issue_model db_getIssue(int issue_id) {
         try {
             String query = "select * FROM issues WHERE ISSUE_ID=?";
             stmt = conn.prepareStatement(query);
             stmt.setInt(1, issue_id);
-            stmt.executeUpdate();
+            ResultSet rs = stmt.executeQuery();
+            Issue_model issue = null;
+            issue.setId(rs.getInt("ISSUE_ID"));
+            issue.setTitle(rs.getString("TITLE"));
+            issue.setDescription(rs.getString("DESCRIPTION"));
+            issue.setDate(rs.getDate("PUBLISHING_DATE"));
+            issue.setStatus(db_getStatus(rs.getInt("ISSUE_id")).getStatus());
+            return issue;
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
+            return null;
+        }
+        catch(NullPointerException e)
+        {
+            System.out.print("NullPointerException Caught");
+            return null;
         }
     }
 
@@ -189,6 +230,11 @@ public class Db_operations {
             return user;
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
+            return null;
+        }
+        catch(NullPointerException e)
+        {
+            System.out.print("NullPointerException Caught");
             return null;
         }
     }

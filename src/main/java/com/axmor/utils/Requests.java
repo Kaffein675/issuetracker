@@ -8,8 +8,8 @@ public class Requests {
         return request.queryParams("locale");
     }
 
-    public static String getParamIsbn(Request request) {
-        return request.params("isbn");
+    public static String getParamId(Request request) {
+        return request.params("id");
     }
 
     public static String getQueryUsername(Request request) {
