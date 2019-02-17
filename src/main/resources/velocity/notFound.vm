@@ -1,22 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <style>
-        * { font-weight: normal; font-family: arial; box-sizing: border-box; }
-        body { margin: 20px; }
-        ul { margin-top: 0; padding: 0; }
-        .issue { padding: 15px; border: 1px solid #ccc; border-radius: 5px; margin: 15px 0; background: #FCFCFC; }
-        .issue h2 { margin-top: 0; padding-bottom: 15px; border-bottom: 1px solid #ddd; }
-        .issue h3 { font-size: 16px; margin-bottom: 5px; }
-        .status li { display: inline-block; }
-        .status li:after { content: ","; }
-        .status li:last-child:after { content: ""; }
-    </style>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Hello, world!</h1>
-<a>${name}</a>
-</body>
-</html>
+#parse("/velocity/main.vm")
+#@mainMain()
+<h1>$msg.get("ERROR_404_NOT_FOUND")</h1>
+#end
