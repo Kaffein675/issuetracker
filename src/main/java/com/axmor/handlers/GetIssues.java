@@ -6,14 +6,14 @@ import com.axmor.db.model.Issue_model;
 import com.axmor.utils.*;
 import spark.*;
 import java.util.*;
-import static com.axmor.utils.Jcon.*;
+import static com.axmor.utils.Json.*;
 import static com.axmor.utils.Requests.*;
 
 
 public class GetIssues {
 
     public static Route fetchAllBooks = (Request request, Response response) -> {
-        Login.ensureUserIsLoggedIn(request, response);
+        //Login.ensureUserIsLoggedIn(request, response);
         if (clientAcceptsHtml(request)) {
             HashMap<String, Object> model = new HashMap<>();
             model.put("issues", Db_operations.db_getAllIssues());

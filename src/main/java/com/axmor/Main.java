@@ -20,20 +20,19 @@ public class Main {
         enableDebugScreen();
 
         Db_operations.db_connect();
+        //Db_operations.db_getAllIssues();
 
         before("*",            Filters.addTrailingSlashes);
         before("*",            Filters.handleLocaleChange);
 
         get(Path.Web.ISSUES,         GetIssues.fetchAllBooks);
         get(Path.Web.ONE_ISSUE,      GetIssues.fetchOneBook);
-        get(Path.Web.LOGIN,          Login.serveLoginPage);
-        post(Path.Web.LOGIN,         Login.handleLoginPost);
+        //get(Path.Web.LOGIN,          Login.serveLoginPage);
+        //post(Path.Web.LOGIN,         Login.handleLoginPost);
         post(Path.Web.LOGOUT,        Login.handleLogoutPost);
         get("*",                     View.notFound);
 
         after("*",             Filters.addGzipHeader);
-
-        Db_operations.db_disconnect();
     }
 
 }

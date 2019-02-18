@@ -1,0 +1,22 @@
+#parse("/velocity/main.vm")
+#@mainMain()
+<form id="loginForm" method="post">
+    #if($authenticationFailed)
+    <p class="bad notification">Log in failed</p>
+    #elseif($authenticationSucceeded)
+    <p class="good notification">Log in success ${currentUser}</p>
+    #elseif($loggedOut)
+    <p class="notification">Log out</p>
+    #end
+    <h1>Login</h1>
+    <p>Please enter your username and password. <small><br>(See the <a href=" $WebPath.getISSUES() ">main page</a> if you need a hint)</small></p>
+    <label>Username</label>
+    <input type="text" name="username" placeholder="Username" value="" required>
+    <label>Password</label>
+    <input type="password" name="password" placeholder="Password" value="" required>
+    #if($loginRedirect)
+    <input type="hidden" name="loginRedirect" value="$loginRedirect">
+    #end
+    <input type="submit" value="Log in">
+</form>
+#end

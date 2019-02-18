@@ -6,7 +6,7 @@ import com.axmor.db.model.Status_model;
 import com.axmor.db.model.User;
 
 import java.sql.*;
-import java.util.List;
+import java.util.*;
 
 public class Db_operations {
 
@@ -40,31 +40,33 @@ public class Db_operations {
         }
     }
 
-    public static List<Issue_model> db_getAllIssues(){
+    public static Iterable<Issue_model> db_getAllIssues(){
         try {
             String query = "SELECT * FROM ISSUES";
             stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
-            List<Issue_model> issues = null;
-            Issue_model issue = null;
+            ArrayList<Issue_model> issues = new ArrayList<>();
+            Issue_model issue = new Issue_model();
+            Status_model status = new Status_model();
             while (rs.next()) {
                 issue.setId(rs.getInt("ISSUE_ID"));
                 issue.setTitle(rs.getString("TITLE"));
                 issue.setDescription(rs.getString("DESCRIPTION"));
                 issue.setDate(rs.getDate("PUBLISHING_DATE"));
-                issue.setStatus(db_getStatus(rs.getInt("ISSUE_id")).getStatus());
+                status = db_getStatus(rs.getInt("ISSUE_id"));
+                issue.setStatus("ghjhg");
                 issues.add(issue);
             }
             return issues;
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
             return null;
-        }
-        catch(NullPointerException e)
+        }catch(NullPointerException e)
         {
             System.out.print("NullPointerException Caught");
             return null;
         }
+
     }
 
     private static Status_model db_getStatus(int issue_id) {
@@ -73,8 +75,8 @@ public class Db_operations {
             stmt = conn.prepareStatement(query);
             stmt.setInt(1, issue_id);
             ResultSet rs = stmt.executeQuery();
-            Status_model status = null;
-            status.setStatus_id(rs.getInt("STATUS_ID "));
+            Status_model status = new Status_model();
+            status.setStatus_id(rs.getInt("STATUS_ID"));
             status.setStatus(rs.getString("STATUS"));
             status.setIssue_id(issue_id);
             return status;
@@ -96,8 +98,123 @@ public class Db_operations {
             stmt.setInt(1, id);
             stmt.executeUpdate();
             ResultSet rs = stmt.executeQuery();
-            List<Comment_model> comments = null;
-            Comment_model comment = null;
+            List<Comment_model> comments = new List<Comment_model>() {
+                @Override
+                public int size() {
+                    return 0;
+                }
+
+                @Override
+                public boolean isEmpty() {
+                    return false;
+                }
+
+                @Override
+                public boolean contains(Object o) {
+                    return false;
+                }
+
+                @Override
+                public Iterator<Comment_model> iterator() {
+                    return null;
+                }
+
+                @Override
+                public Object[] toArray() {
+                    return new Object[0];
+                }
+
+                @Override
+                public <T> T[] toArray(T[] ts) {
+                    return null;
+                }
+
+                @Override
+                public boolean add(Comment_model comment_model) {
+                    return false;
+                }
+
+                @Override
+                public boolean remove(Object o) {
+                    return false;
+                }
+
+                @Override
+                public boolean containsAll(Collection<?> collection) {
+                    return false;
+                }
+
+                @Override
+                public boolean addAll(Collection<? extends Comment_model> collection) {
+                    return false;
+                }
+
+                @Override
+                public boolean addAll(int i, Collection<? extends Comment_model> collection) {
+                    return false;
+                }
+
+                @Override
+                public boolean removeAll(Collection<?> collection) {
+                    return false;
+                }
+
+                @Override
+                public boolean retainAll(Collection<?> collection) {
+                    return false;
+                }
+
+                @Override
+                public void clear() {
+
+                }
+
+                @Override
+                public Comment_model get(int i) {
+                    return null;
+                }
+
+                @Override
+                public Comment_model set(int i, Comment_model comment_model) {
+                    return null;
+                }
+
+                @Override
+                public void add(int i, Comment_model comment_model) {
+
+                }
+
+                @Override
+                public Comment_model remove(int i) {
+                    return null;
+                }
+
+                @Override
+                public int indexOf(Object o) {
+                    return 0;
+                }
+
+                @Override
+                public int lastIndexOf(Object o) {
+                    return 0;
+                }
+
+                @Override
+                public ListIterator<Comment_model> listIterator() {
+                    return null;
+                }
+
+                @Override
+                public ListIterator<Comment_model> listIterator(int i) {
+                    return null;
+                }
+
+                @Override
+                public List<Comment_model> subList(int i, int i1) {
+                    return null;
+                }
+            };
+            Comment_model comment = new Comment_model();
             while (rs.next()) {
                 comment.setId(rs.getInt("ISSUE_ID"));
                 comment.setIssue_id(rs.getInt("ISSUE_ID"));
@@ -144,7 +261,7 @@ public class Db_operations {
 
     public static void db_createIssue(String title, String disc) {
         try {
-            String query = "INSERT INTO issues (TITLE,DISCRIPTION,PUBLISHING_DATE) VALUES (?,?,?)";
+            String query = "INSERT INTO issues (TITLE,DESCRIPTION,PUBLISHING_DATE) VALUES (?,?,?)";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, title);
             stmt.setString(2, disc);

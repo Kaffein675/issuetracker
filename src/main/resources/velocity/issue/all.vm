@@ -1,0 +1,13 @@
+#parse("/velocity/main.vm")
+#@mainMain()
+<h1>All issues</h1>
+<div class="row row-3">
+    #foreach($issue in $issues)
+    <div class="col">
+        <a href="$WebPath.getISSUES() $issue.getId()">
+            <strong>$issue.getTitle()</strong> <br>by $issue.getStatus() <br>$issue.getDate()
+        </a>
+    </div>
+    #end
+</div>
+#end

@@ -1,4 +1,4 @@
 #parse("/velocity/main.vm")
 #@mainMain()
-<h1>$msg.get("ERROR_404_NOT_FOUND")</h1>
+<h1>We can't find the page you're looking for <small>(error 404)</small></h1>
 #end

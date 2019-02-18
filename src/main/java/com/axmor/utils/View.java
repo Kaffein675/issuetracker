@@ -17,7 +17,7 @@ public class View {
 
     public static Route notAcceptable = (Request request, Response response) -> {
         response.status(HttpStatus.NOT_ACCEPTABLE_406);
-        return new MessageBundle(getSessionLocale(request)).get("ERROR_406_NOT_ACCEPTABLE");
+        return new MessageBundle(getSessionLocale(request)).get("No suitable content found. Please specify either 'html/text' or 'application/json'.");
     };
 
     public static Route notFound = (Request request, Response response) -> {
