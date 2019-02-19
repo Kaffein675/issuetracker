@@ -10,7 +10,6 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,6 +22,13 @@ public class Login {
         model.put("loggedOut", removeSessionAttrLoggedOut(request));
         model.put("loginRedirect", removeSessionAttrLoginRedirect(request));
         return View.render(request, model, Path.Template.LOGIN);
+    };
+
+    public static Route serveSubmitPage = (Request request, Response response) -> {
+        Map<String, Object> model = new HashMap<>();
+        model.put("loggedOut", removeSessionAttrLoggedOut(request));
+        model.put("loginRedirect", removeSessionAttrLoginRedirect(request));
+        return View.render(request, model, Path.Template.SUBMIT);
     };
 
     public static Route handleUserCreate = (Request request, Response response) -> {
@@ -69,7 +75,7 @@ public class Login {
         }
     }
 
-    private static boolean authenticate(String username, String password) throws SQLException {
+    private static boolean authenticate(String username, String password){
         if (username.isEmpty() || password.isEmpty()) {
             return false;
         }
@@ -83,7 +89,7 @@ public class Login {
 
     private static void createUser(String username, String Password) {
         String newSalt = BCrypt.gensalt();
-        String newHashedPassword = BCrypt.hashpw(newSalt, Password);
+        String newHashedPassword = BCrypt.hashpw(Password, newSalt);
         Db_operations.db_createUser(username, newSalt, newHashedPassword);
     }
 }

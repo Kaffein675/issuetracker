@@ -1,0 +1,5 @@
+#parse("/velocity/main.vm")
+#@mainMain()
+<h1>$issue.getTitle()</h1>
+<br>$issue.getStatus()
+#end

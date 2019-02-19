@@ -53,8 +53,7 @@ public class Db_operations {
                 issue.setTitle(rs.getString("TITLE"));
                 issue.setDescription(rs.getString("DESCRIPTION"));
                 issue.setDate(rs.getDate("PUBLISHING_DATE"));
-                status = db_getStatus(rs.getInt("ISSUE_id"));
-                issue.setStatus("ghjhg");
+                issue.setStatus(db_getStatus(rs.getInt("ISSUE_id")).getStatus());
                 issues.add(issue);
             }
             return issues;
@@ -75,6 +74,7 @@ public class Db_operations {
             stmt = conn.prepareStatement(query);
             stmt.setInt(1, issue_id);
             ResultSet rs = stmt.executeQuery();
+            rs.next();
             Status_model status = new Status_model();
             status.setStatus_id(rs.getInt("STATUS_ID"));
             status.setStatus(rs.getString("STATUS"));
@@ -91,149 +91,34 @@ public class Db_operations {
         }
     }
 
-    public static List<Comment_model> db_getAllComments(int id) {
+    public static Iterable<Comment_model> db_getAllComments(int id) {
         try {
             String query = "SELECT * FROM comments where ISSUE_ID=?";
             stmt = conn.prepareStatement(query);
             stmt.setInt(1, id);
-            stmt.executeUpdate();
             ResultSet rs = stmt.executeQuery();
-            List<Comment_model> comments = new List<Comment_model>() {
-                @Override
-                public int size() {
-                    return 0;
-                }
-
-                @Override
-                public boolean isEmpty() {
-                    return false;
-                }
-
-                @Override
-                public boolean contains(Object o) {
-                    return false;
-                }
-
-                @Override
-                public Iterator<Comment_model> iterator() {
-                    return null;
-                }
-
-                @Override
-                public Object[] toArray() {
-                    return new Object[0];
-                }
-
-                @Override
-                public <T> T[] toArray(T[] ts) {
-                    return null;
-                }
-
-                @Override
-                public boolean add(Comment_model comment_model) {
-                    return false;
-                }
-
-                @Override
-                public boolean remove(Object o) {
-                    return false;
-                }
-
-                @Override
-                public boolean containsAll(Collection<?> collection) {
-                    return false;
-                }
-
-                @Override
-                public boolean addAll(Collection<? extends Comment_model> collection) {
-                    return false;
-                }
-
-                @Override
-                public boolean addAll(int i, Collection<? extends Comment_model> collection) {
-                    return false;
-                }
-
-                @Override
-                public boolean removeAll(Collection<?> collection) {
-                    return false;
-                }
-
-                @Override
-                public boolean retainAll(Collection<?> collection) {
-                    return false;
-                }
-
-                @Override
-                public void clear() {
-
-                }
-
-                @Override
-                public Comment_model get(int i) {
-                    return null;
-                }
-
-                @Override
-                public Comment_model set(int i, Comment_model comment_model) {
-                    return null;
-                }
-
-                @Override
-                public void add(int i, Comment_model comment_model) {
-
-                }
-
-                @Override
-                public Comment_model remove(int i) {
-                    return null;
-                }
-
-                @Override
-                public int indexOf(Object o) {
-                    return 0;
-                }
-
-                @Override
-                public int lastIndexOf(Object o) {
-                    return 0;
-                }
-
-                @Override
-                public ListIterator<Comment_model> listIterator() {
-                    return null;
-                }
-
-                @Override
-                public ListIterator<Comment_model> listIterator(int i) {
-                    return null;
-                }
-
-                @Override
-                public List<Comment_model> subList(int i, int i1) {
-                    return null;
-                }
-            };
+            ArrayList<Comment_model> comments = new ArrayList<>();
             Comment_model comment = new Comment_model();
-            while (rs.next()) {
-                comment.setId(rs.getInt("ISSUE_ID"));
-                comment.setIssue_id(rs.getInt("ISSUE_ID"));
-                comment.setAuthor(rs.getString("AUTHOR"));
-                comment.setDate(rs.getDate("PUBLISHING_DATE"));
-                comment.setContent(rs.getString("CONTENT"));
-                comments.add(comment);
-            }
+            while(rs.next())
+                {
+                    comment.setId(rs.getInt("ISSUE_ID"));
+                    comment.setIssue_id(rs.getInt("ISSUE_ID"));
+                    comment.setAuthor(rs.getString("AUTHOR"));
+                    comment.setDate(rs.getDate("SUBMISSION_DATE"));
+                    comment.setContent(rs.getString("CONTENT"));
+                    comments.add(comment);
+                }
             return comments;
-        } catch (SQLException sqlEx) {
-            sqlEx.printStackTrace();
-            return null;
-        }
+            } catch(SQLException sqlEx){
+                sqlEx.printStackTrace();
+                return null;
+            }
         catch(NullPointerException e)
-        {
-            System.out.print("NullPointerException Caught");
-            return null;
+            {
+                System.out.print("NullPointerException Caught");
+                return null;
+            }
         }
-    }
 
     public static Issue_model db_getIssue(int issue_id) {
         try {
@@ -241,8 +126,9 @@ public class Db_operations {
             stmt = conn.prepareStatement(query);
             stmt.setInt(1, issue_id);
             ResultSet rs = stmt.executeQuery();
-            Issue_model issue = null;
-            issue.setId(rs.getInt("ISSUE_ID"));
+            Issue_model issue = new Issue_model();
+            rs.next();
+            issue.setId(issue_id);
             issue.setTitle(rs.getString("TITLE"));
             issue.setDescription(rs.getString("DESCRIPTION"));
             issue.setDate(rs.getDate("PUBLISHING_DATE"));
@@ -335,11 +221,12 @@ public class Db_operations {
 
     public static User db_getUser(String user_name) {
         try {
-            String query = "select * FROM issues WHERE USER_NAME=?";
+            String query = "select * FROM users WHERE USER_NAME=?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, user_name);
             ResultSet rs = stmt.executeQuery();
-            User user = null;
+            rs.next();
+            User user = new User();
             user.setUser_id(rs.getInt("USER_ID"));
             user.setUser_name(rs.getString("USER_NAME"));
             user.setSalt(rs.getString("SALT"));

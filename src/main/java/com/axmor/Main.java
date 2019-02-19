@@ -25,11 +25,13 @@ public class Main {
         before("*",            Filters.addTrailingSlashes);
         before("*",            Filters.handleLocaleChange);
 
-        get(Path.Web.ISSUES,         GetIssues.fetchAllBooks);
-        get(Path.Web.ONE_ISSUE,      GetIssues.fetchOneBook);
-        //get(Path.Web.LOGIN,          Login.serveLoginPage);
-        //post(Path.Web.LOGIN,         Login.handleLoginPost);
+        get(Path.Web.ISSUES,         GetIssues.fetchAllIssues);
+        get(Path.Web.ONE_ISSUE,      GetIssues.fetchOneIssue);
+        get(Path.Web.LOGIN,          Login.serveLoginPage);
+        get(Path.Web.SUBMIT,          Login.serveSubmitPage);
+        post(Path.Web.LOGIN,         Login.handleLoginPost);
         post(Path.Web.LOGOUT,        Login.handleLogoutPost);
+        post(Path.Web.SUBMIT,        Login.handleUserCreate);
         get("*",                     View.notFound);
 
         after("*",             Filters.addGzipHeader);

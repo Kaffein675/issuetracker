@@ -2,8 +2,8 @@
 #* @implicitly included *#
 #* @vtlvariable name="WebPath" type="com.axmor.utils.Path.Web" *#
 #* @vtlvariable name="msg" type="com.axmor.utils.MessageBundle" *#
-#* @vtlvariable name="books" type="java.lang.Iterable<com.axmor.db.model.Issue_model>" *#
-    #* @vtlvariable name="book" type="com.axmor.db.model.Issue_model" *#
+#* @vtlvariable name="issues" type="java.lang.Iterable<com.axmor.db.model.Issue_model>" *#
+    #* @vtlvariable name="issue" type="com.axmor.db.model.Issue_model" *#
     #* @vtlvariable name="users" type="java.lang.Iterable<com.axmor.db.model.User>" *#
         #* @vtlvariable name="currentUser" type="java.lang.String" *#
         #* @vtlvariable name="loggedOut" type="java.lang.String" *#

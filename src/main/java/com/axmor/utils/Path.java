@@ -7,14 +7,14 @@ public class Path {
         @Getter public static final String LOGIN = "/login/";
         @Getter public static final String LOGOUT = "/logout/";
         @Getter public static final String ISSUES= "/";
-        @Getter public static final String ONE_ISSUE = "/:id/";
-
+        @Getter public static final String ONE_ISSUE = "/issue/:id/";
+        @Getter public static final String SUBMIT = "/submit/";
     }
     public static class Template {
         public static final String LOGIN = "/velocity/login/login.vm";
         public static final String ISSUES_ALL = "/velocity/issue/all.vm";
         public static final String ISSUES_ONE = "/velocity/issue/one.vm";
         public static final String NOT_FOUND = "/velocity/notFound.vm";
-
+        public static final String SUBMIT = "/velocity/login/submit.vm";
     }
 }

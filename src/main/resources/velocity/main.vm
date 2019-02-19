@@ -19,6 +19,7 @@
             </li>
             #else
             <li><a href="$WebPath.getLOGIN()">Log in</a></li>
+            <li><a href="$WebPath.getSUBMIT()">Submit</a></li>
             #end
         </ul>
     </nav>

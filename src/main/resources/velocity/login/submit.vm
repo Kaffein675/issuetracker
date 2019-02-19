@@ -1,14 +1,14 @@
 #parse("/velocity/main.vm")
 #@mainMain()
-<form id="loginForm" method="post">
+<form id="SubmitForm" method="post">
     #if($authenticationFailed)
-    <p class="bad notification">Log in failed</p>
+    <p class="bad notification">Submit is failed</p>
     #elseif($authenticationSucceeded)
-    <p class="good notification">Log in success ${currentUser}</p>
+    <p class="good notification">Submit is success ${currentUser}</p>
     #elseif($loggedOut)
     <p class="notification">Log out</p>
     #end
-    <h1>Login</h1>
+    <h1>Submit</h1>
     <p>Please enter your username and password.</p>
     <label>Username</label>
     <input type="text" name="username" placeholder="Username" value="" required>
