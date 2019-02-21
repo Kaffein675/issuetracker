@@ -2,7 +2,8 @@ CREATE TABLE issues(
     issue_id int primary key AUTO_INCREMENT,
     title varchar(255) not null,
     discription text,
-    publishing_date date
+    publishing_date date,
+    author varchar(255)
 );
 
 CREATE TABLE comments (

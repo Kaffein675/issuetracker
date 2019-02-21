@@ -27,11 +27,16 @@ public class Main {
 
         get(Path.Web.ISSUES,         GetIssues.fetchAllIssues);
         get(Path.Web.ONE_ISSUE,      GetIssues.fetchOneIssue);
+        get(Path.Web.ISSUE_EDIT,     GetIssues.serveEditIssue);
+        get(Path.Web.ISSUE_CREATE,   GetIssues.serveCreateIssue);
         get(Path.Web.LOGIN,          Login.serveLoginPage);
-        get(Path.Web.SUBMIT,          Login.serveSubmitPage);
+        get(Path.Web.SUBMIT,         Login.serveSubmitPage);
         post(Path.Web.LOGIN,         Login.handleLoginPost);
         post(Path.Web.LOGOUT,        Login.handleLogoutPost);
         post(Path.Web.SUBMIT,        Login.handleUserCreate);
+        post(Path.Web.ISSUE_EDIT,    GetIssues.handleEditPost);
+        post(Path.Web.ISSUE_CREATE,  GetIssues.handleCreatePost);
+
         get("*",                     View.notFound);
 
         after("*",             Filters.addGzipHeader);

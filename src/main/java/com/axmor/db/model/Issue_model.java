@@ -9,6 +9,7 @@ public class Issue_model {
     private String description;
     private Date publishing_date;
     private String status;
+    private String author;
 
     public int setId(int id){
         return this.issue_id = id;
@@ -25,6 +26,9 @@ public class Issue_model {
     public String setStatus(String status){
         return this.status = status;
     }
+    public String setAuthor(String author){
+        return this.author = author;
+    }
     public int getId(){
         return this.issue_id;
     }
@@ -39,5 +43,8 @@ public class Issue_model {
     }
     public String getStatus(){
         return this.status;
+    }
+    public String getAuthor(){
+        return this.author;
     }
 }

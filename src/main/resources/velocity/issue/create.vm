@@ -1,0 +1,17 @@
+#parse("/velocity/main.vm")
+#@mainMain()
+<form id="createIssueForm" method="post">
+    <h1>Create issue</h1>
+    <p>Please title your issue and discribe it.</p>
+    <label>Title</label>
+    <input type="text" name="title" placeholder="Title" value="" required>
+    <label>Description</label>
+    <input type="text" name="description" placeholder="Description" value="" required>
+    <select name = "status">
+        #foreach($status in $statuses)
+        <option value="$status.getStatus()">$status.getStatus()</option>
+        #end
+    </select>
+    <input type="submit" value="Create">
+</form>
+#end

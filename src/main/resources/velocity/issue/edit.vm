@@ -1,0 +1,17 @@
+#parse("/velocity/main.vm")
+#@mainMain()
+<form id="createIssueForm" method="post">
+    <h1>Edit issue</h1>
+    <p>Please retitle your issue and rediscribe it.</p>
+    <label>Title</label>
+    <input type="text" name="title" placeholder="Title" value="$issue.getTitle()" required>
+    <label>Description</label>
+    <input type="text" name="description" placeholder="Description" value="$issue.getDescription()" required>
+    <select name = "status">
+        <option value="Created">Created</option>
+        <option value="Done">Done</option>
+        <option value="Almost done">Almost done</option>
+    </select>
+    <input type="submit" value="Create">
+</form>
+#end
