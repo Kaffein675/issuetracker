@@ -8,7 +8,6 @@
     <style type="text/css">
     #selects select {display:none}
     </style>
-
 </head>
 <body>
 <header>
@@ -32,17 +31,7 @@
     <div id="content">
         $bodyContent
     </div>
-
-
 </main>
-<footer>
-    <script type="text/javascript">
-    function sel(f) {
-        var s=document.getElementsByTagName('select');
-        for (var i=0;i<s.length;i++) {s[i].style.display='none'}
-    }
-    </script>
-</footer>
 </body>
 </html>
 #end

@@ -1,8 +1,9 @@
 CREATE TABLE issues(
     issue_id int primary key AUTO_INCREMENT,
     title varchar(255) not null,
-    discription text,
+    description text,
     publishing_date date,
+
     author varchar(255)
 );
 

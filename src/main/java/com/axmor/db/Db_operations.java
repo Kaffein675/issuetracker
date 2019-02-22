@@ -46,8 +46,8 @@ public class Db_operations {
             stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
             ArrayList<Issue_model> issues = new ArrayList<>();
-            Issue_model issue = new Issue_model();
             while (rs.next()) {
+                Issue_model issue = new Issue_model();
                 issue.setId(rs.getInt("ISSUE_ID"));
                 issue.setTitle(rs.getString("TITLE"));
                 issue.setDescription(rs.getString("DESCRIPTION"));
@@ -60,12 +60,7 @@ public class Db_operations {
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
             return null;
-        }catch(NullPointerException e)
-        {
-            System.out.print("NullPointerException Caught");
-            return null;
         }
-
     }
 
     public static Iterable<Status_model> db_getStatuses() {
@@ -73,9 +68,9 @@ public class Db_operations {
             String query = "SELECT * FROM ISSUE_STATUS";
             stmt = conn.prepareStatement(query);
             ArrayList<Status_model> statuses = new ArrayList<>();
-            Status_model status = new Status_model();
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
+                Status_model status = new Status_model();
                 status.setStatus_id(rs.getInt("STATUS_ID"));
                 status.setStatus(rs.getString("STATUS"));
                 statuses.add(status);
@@ -94,9 +89,9 @@ public class Db_operations {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             ArrayList<Comment_model> comments = new ArrayList<>();
-            Comment_model comment = new Comment_model();
             while(rs.next())
                 {
+                    Comment_model comment = new Comment_model();
                     comment.setId(rs.getInt("ISSUE_ID"));
                     comment.setIssue_id(rs.getInt("ISSUE_ID"));
                     comment.setAuthor(rs.getString("AUTHOR"));
@@ -132,14 +127,15 @@ public class Db_operations {
         }
     }
 
-    public static void db_createIssue(String title, String desc, String author) {
+    public static void db_createIssue(String title, String desc, String author, String status) {
         try {
-            String query = "INSERT INTO issues (TITLE,DESCRIPTION,PUBLISHING_DATE, AUTHOR) VALUES (?,?,?,?)";
+            String query = "INSERT INTO issues (TITLE,DESCRIPTION,PUBLISHING_DATE, AUTHOR, STATUS) VALUES (?,?,?,?,?)";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, title);
             stmt.setString(2, desc);
             stmt.setDate(3, new java.sql.Date(java.util.Calendar.getInstance().getTime().getTime()));
             stmt.setString(4, author);
+            stmt.setString(5, status);
             stmt.executeUpdate();
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();

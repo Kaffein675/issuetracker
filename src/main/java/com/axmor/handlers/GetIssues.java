@@ -69,7 +69,7 @@ public class GetIssues {
 
     public static Route handleCreatePost = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        Db_operations.db_createIssue(request.queryParams("title"), request.queryParams("description"),request.session().attribute("currentUser"));
+        Db_operations.db_createIssue(request.queryParams("title"), request.queryParams("description"),request.session().attribute("currentUser"), request.queryParams("status"));
         model.put("issues", Db_operations.db_getAllIssues());
         return View.render(request, model, Path.Template.ISSUES_ALL);
     };
