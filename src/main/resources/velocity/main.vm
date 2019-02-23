@@ -5,9 +5,6 @@
     <link rel="stylesheet" href="/main.css">
     <link rel="icon" href="/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style type="text/css">
-    #selects select {display:none}
-    </style>
 </head>
 <body>
 <header>

@@ -25,17 +25,24 @@ public class Main {
         before("*",            Filters.addTrailingSlashes);
         before("*",            Filters.handleLocaleChange);
 
-        get(Path.Web.ISSUES,         GetIssues.fetchAllIssues);
-        get(Path.Web.ONE_ISSUE,      GetIssues.fetchOneIssue);
-        get(Path.Web.ISSUE_EDIT,     GetIssues.serveEditIssue);
-        get(Path.Web.ISSUE_CREATE,   GetIssues.serveCreateIssue);
+        get(Path.Web.ISSUES,         Issues.fetchAllIssues);
+        get(Path.Web.ONE_ISSUE,      Issues.fetchOneIssue);
+        get(Path.Web.ISSUE_EDIT,     Issues.serveEditPage);
+        get(Path.Web.ISSUE_CREATE,   Issues.serveCreatePage);
         get(Path.Web.LOGIN,          Login.serveLoginPage);
         get(Path.Web.SUBMIT,         Login.serveSubmitPage);
+        get(Path.Web.ADD_COMMENT,    Comments.serveAddPage);
+        get(Path.Web.EDIT_COMMENT,   Comments.serveEditPage);
+        get(Path.Web.REMOVE_ISSUE,   Issues.removeIssue);
+        get(Path.Web.REMOVE_COMMENT, Comments.removeComment);
+
         post(Path.Web.LOGIN,         Login.handleLoginPost);
         post(Path.Web.LOGOUT,        Login.handleLogoutPost);
         post(Path.Web.SUBMIT,        Login.handleUserCreate);
-        post(Path.Web.ISSUE_EDIT,    GetIssues.handleEditPost);
-        post(Path.Web.ISSUE_CREATE,  GetIssues.handleCreatePost);
+        post(Path.Web.ISSUE_EDIT,    Issues.handleEditPost);
+        post(Path.Web.ISSUE_CREATE,  Issues.handleCreatePost);
+        post(Path.Web.ADD_COMMENT,   Comments.handleAddPost);
+        post(Path.Web.EDIT_COMMENT,  Comments.handleEditPost);
 
         get("*",                     View.notFound);
 

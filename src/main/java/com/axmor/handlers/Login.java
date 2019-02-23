@@ -57,7 +57,7 @@ public class Login {
         if (getQueryLoginRedirect(request) != null) {
             response.redirect(getQueryLoginRedirect(request));
         }
-        return View.render(request, model, Path.Template.LOGIN);
+        return View.render(request, model, Path.Template.ISSUES_ALL);
     };
 
     public static Route handleLogoutPost = (Request request, Response response) -> {

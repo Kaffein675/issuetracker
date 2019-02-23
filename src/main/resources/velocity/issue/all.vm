@@ -1,5 +1,6 @@
 #parse("/velocity/main.vm")
 #@mainMain()
+<a href="$WebPath.getISSUE_CREATE()">Create issue</a>
 <h1>All issues</h1>
 <div class="row row-3">
     #foreach($issue in $issues)

@@ -92,7 +92,7 @@ public class Db_operations {
             while(rs.next())
                 {
                     Comment_model comment = new Comment_model();
-                    comment.setId(rs.getInt("ISSUE_ID"));
+                    comment.setId(rs.getInt("COMMENT_ID"));
                     comment.setIssue_id(rs.getInt("ISSUE_ID"));
                     comment.setAuthor(rs.getString("AUTHOR"));
                     comment.setDate(rs.getDate("SUBMISSION_DATE"));
@@ -105,6 +105,26 @@ public class Db_operations {
                 return null;
             }
         }
+
+    public static Comment_model db_getComment(int id) {
+        try {
+            String query = "SELECT * FROM comments where COMMENT_ID=?";
+            stmt = conn.prepareStatement(query);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            Comment_model comment = new Comment_model();
+            comment.setId(rs.getInt("ISSUE_ID"));
+            comment.setIssue_id(rs.getInt("ISSUE_ID"));
+            comment.setAuthor(rs.getString("AUTHOR"));
+            comment.setDate(rs.getDate("SUBMISSION_DATE"));
+            comment.setContent(rs.getString("CONTENT"));
+            return comment;
+        } catch(SQLException sqlEx){
+            sqlEx.printStackTrace();
+            return null;
+        }
+    }
 
     public static Issue_model db_getIssue(int issue_id) {
         try {
@@ -233,17 +253,6 @@ public class Db_operations {
         }catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
 
-        }
-    }
-
-    public static void db_create_status(String status){
-        try{
-            String query = "INSERT INTO issue_status (STATUS) VALUES (?)";
-            stmt = conn.prepareStatement(query);
-            stmt.setString(1,status);
-            stmt.executeUpdate();
-        }catch (SQLException sqlEx){
-            sqlEx.printStackTrace();
         }
     }
 }
