@@ -1,6 +1,46 @@
 #parse("/velocity/main.vm")
 #@mainMain()
-<h1>$issue.getTitle()</h1>
-<br>$issue.getStatus()
-<br>$issue.getId()
+<div class="container">
+    <div class="col-lg-12">
+        <h2 class="text-center">$issue.getTitle()</h2>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <p class="text-secondary text-center">$issue.getDate()</p>
+                    </div>
+                    <div class="col-md-10">
+                    <p>
+                        <strong>$issue.getAuthor()</strong>
+                        <span class="float-right">$issue.getStatus()</span>
+                    </p>
+                        <div class="clearfix"></div>
+                            <p>$issue.getDescription()</p>
+                        <p>
+                            <a class="float-right btn text-white btn-danger ml-2">Delete</a>
+                            <a class="float-right btn btn-outline-primary">Edit</a>
+                        </p>
+                    </div>
+                </div>
+                <br>
+                #foreach($comment in $comments)
+                <div class="card card-inner">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <p class="text-secondary text-center">$comment.getDate()</p>
+                            </div>
+                            <div class="col-md-10">
+                                <p><strong>$comment.getAuthor()</strong></p>
+                                <p>$comment.getContent()</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                #end
+            </div>
+        </div>
+    </div>
+</div>
 #end

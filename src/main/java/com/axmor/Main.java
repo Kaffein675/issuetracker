@@ -3,7 +3,6 @@ package com.axmor;
 import com.axmor.db.Db_operations;
 import com.axmor.utils.*;
 import com.axmor.handlers.*;
-
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.enableDebugScreen;
 
@@ -33,8 +32,9 @@ public class Main {
         get(Path.Web.SUBMIT,         Login.serveSubmitPage);
         get(Path.Web.ADD_COMMENT,    Comments.serveAddPage);
         get(Path.Web.EDIT_COMMENT,   Comments.serveEditPage);
-        get(Path.Web.REMOVE_ISSUE,   Issues.removeIssue);
-        get(Path.Web.REMOVE_COMMENT, Comments.removeComment);
+
+        delete(Path.Web.REMOVE_ISSUE,   Issues.removeIssue);
+        delete(Path.Web.REMOVE_COMMENT, Comments.removeComment);
 
         post(Path.Web.LOGIN,         Login.handleLoginPost);
         post(Path.Web.LOGOUT,        Login.handleLogoutPost);
@@ -48,5 +48,4 @@ public class Main {
 
         after("*",             Filters.addGzipHeader);
     }
-
 }

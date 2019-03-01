@@ -2,33 +2,44 @@
 <html>
 <head>
     <title>Issue tracker</title>
-    <link rel="stylesheet" href="/main.css">
-    <link rel="icon" href="/favicon.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="http://bootstraptema.ru/plugins/2016/bootsnav/bootsnav.css" />
+    <link rel="stylesheet" href="css/main.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 <body>
+<div id="wrapper">
 <header>
-    <nav>
-        <a href="$WebPath.getISSUES()">Main page</a>
-        <ul id="menu">
-            #if($currentUser)
-            <li>
-                <form method="post" action="$WebPath.getLOGOUT()">
-                    <button id="logout">Log out</button>
-                </form>
-            </li>
-            #else
-            <li><a href="$WebPath.getLOGIN()">Log in</a></li>
-            <li><a href="$WebPath.getSUBMIT()">Submit</a></li>
-            #end
-        </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="$WebPath.getISSUES()">Main page</a>
+                <ul class="nav navbar-nav" id="menu">
+                #if($currentUser)
+                    <li>
+                        <form method="post" action="$WebPath.getLOGOUT()">
+                            <button id="logout" class="btn btn-outline-dark btn-sm">Log out</button>
+                        </form>
+                    </li>
+                #else
+                    <li><a class="nav-link" href="$WebPath.getLOGIN()"><button class="btn btn-outline-primary btn-sm">Login</button></a></li>
+                    <li><a class="nav-link" href="$WebPath.getSUBMIT()"><button class="btn btn-outline-info btn-sm">Submit</button></a></li>
+                #end
+            </ul>
+        </div>
     </nav>
 </header>
 <main>
-    <div id="content">
+    <section id="content">
         $bodyContent
-    </div>
+    </section>
 </main>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="http://bootstraptema.ru/plugins/2016/bootsnav/bootsnav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 </body>
 </html>
 #end

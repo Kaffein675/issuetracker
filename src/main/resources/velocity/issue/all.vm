@@ -1,14 +1,24 @@
 #parse("/velocity/main.vm")
 #@mainMain()
-<a href="$WebPath.getISSUE_CREATE()">Create issue</a>
-<h1>All issues</h1>
-<div class="row row-3">
-    #foreach($issue in $issues)
-    <div class="col">
-        <a href="/issue/$issue.getId()">
-            <strong>$issue.getTitle()</strong> <br>by $issue.getStatus() <br>$issue.getDate()
-        </a>
+<div class="container">
+    <div class="col-lg-12">
+        <a class="nav-link" href="$WebPath.getISSUE_CREATE()"><button class="btn btn-outline-success btn-sm">Create issue</button></a>
+        <h1>All issues</h1>
+        <div class="row">
+            #foreach( $issue in $issues )
+            <div class="col-md-4 col-sm-6">
+                <div class="serviceBox">
+                    <div class="box-gray aligncenter">
+                        <a class="nav-link" href="/issue/$issue.getId()">
+                            <h3 class="title">$issue.getTitle()</h3>
+                        </a>
+                        <p class="description">$issue.getDescription()</p>
+                        <br>$issue.getStatus() <br>$issue.getDate()
+                    </div>
+                </div>
+            </div>
+            #end
+        </div>
     </div>
-    #end
 </div>
 #end

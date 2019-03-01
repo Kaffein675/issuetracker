@@ -9,12 +9,12 @@ public class Path {
         @Getter public static final String ISSUES= "/";
         @Getter public static final String ONE_ISSUE = "/issue/:id/";
         @Getter public static final String SUBMIT = "/submit/";
-        @Getter public static final String ISSUE_EDIT = "/issue/edit/:id/";
+        @Getter public static final String ISSUE_EDIT = "/edit/issue/:id/";
         @Getter public static final String ISSUE_CREATE = "/create/issue/";
-        @Getter public static final String ADD_COMMENT = "/create/comment/:id";
-        @Getter public static final String EDIT_COMMENT = "/comment/edit/:id";
-        @Getter public static final String REMOVE_ISSUE = "/remove/issue/:id";
-        @Getter public static final String REMOVE_COMMENT = "/remove/comment/:id";
+        @Getter public static final String ADD_COMMENT = "/create/comment/:id/";
+        @Getter public static final String EDIT_COMMENT = "/edit/comment/:id/";
+        @Getter public static final String REMOVE_ISSUE = "/remove/issue/:id/";
+        @Getter public static final String REMOVE_COMMENT = "/remove/comment/:id/";
     }
     public static class Template {
         public static final String LOGIN = "/velocity/login/login.vm";

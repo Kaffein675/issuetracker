@@ -26,6 +26,7 @@ public class Comments {
         Db_operations.db_createComment(Integer.parseInt(getParamId(request).trim()),
                 request.session().attribute("currentUser"),request.queryParams("content"));
         model.put("issue", Db_operations.db_getIssue(Integer.parseInt(getParamId(request).trim())));
+        model.put("comments", Db_operations.db_getAllComments(Integer.parseInt(getParamId(request).trim())));
         return View.render(request, model, Path.Template.ISSUES_ONE);
     };
 
