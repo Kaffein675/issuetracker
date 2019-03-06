@@ -7,6 +7,9 @@ You need the following tools to build the project:
   
 When everything is installed and `PATH` is configured, run `mvn -version` to make sure that it is using JDK 8.
 
+
+manually create tables from file tables.sql
+
 ## Building
 Run the following command to build the project:
 ```
