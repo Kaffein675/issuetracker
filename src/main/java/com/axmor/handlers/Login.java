@@ -33,7 +33,9 @@ public class Login {
 
     public static Route handleUserCreate = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        createUser(getQueryUsername(request), getQueryPassword(request));
+        if(Db_operations.db_getUser(getQueryUsername(request)) == null) {
+            createUser(getQueryUsername(request), getQueryPassword(request));
+        }
         if (!authenticate(getQueryUsername(request), getQueryPassword(request))) {
             model.put("authenticationFailed", true);
             return View.render(request, model, Path.Template.LOGIN);

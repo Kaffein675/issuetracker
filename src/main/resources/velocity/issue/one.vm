@@ -17,8 +17,11 @@
                         <div class="clearfix"></div>
                             <p>$issue.getDescription()</p>
                         <p>
-                            <a class="float-right btn text-white btn-danger ml-2">Delete</a>
-                            <a class="float-right btn btn-outline-primary">Edit</a>
+                            <a href="/create/comment/$issue.getId()" class="float-right btn text-black btn-outline-success ml-2">Comment it</a>
+                            #if($currentUser == $issue.getAuthor())
+                            <a href="/remove/issue/$issue.getId()" class="float-right btn text-white btn-danger ml-2">Delete</a>
+                            <a href="/edit/issue/$issue.getId()" class="float-right btn btn-outline-primary">Edit</a>
+                            #end
                         </p>
                     </div>
                 </div>
@@ -33,6 +36,12 @@
                             <div class="col-md-10">
                                 <p><strong>$comment.getAuthor()</strong></p>
                                 <p>$comment.getContent()</p>
+                                <p>
+                                    #if($currentUser == $comment.getAuthor())
+                                    <a href="/remove/comment/$comment.getId()" class="float-right btn text-white btn-danger ml-2">Delete</a>
+                                    <a href="/edit/comment/$comment.getId()" class="float-right btn btn-outline-primary">Edit</a>
+                                    #end
+                                </p>
                             </div>
                         </div>
                     </div>

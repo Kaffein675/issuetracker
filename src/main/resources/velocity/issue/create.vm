@@ -1,17 +1,28 @@
 #parse("/velocity/main.vm")
 #@mainMain()
-<form id="createIssueForm" method="post">
-    <h1>Create issue</h1>
-    <p>Please title your issue and discribe it.</p>
-    <label>Title</label>
-    <input type="text" name="title" placeholder="Title" value="" required>
-    <label>Description</label>
-    <input type="text" name="description" placeholder="Description" value="" required>
-    <select name = "status">
-        #foreach($status in $statuses)
-        <option value="$status.getStatus()">$status.getStatus()</option>
-        #end
-    </select>
-    <input type="submit" value="Create">
-</form>
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <form class="form-horizontal" id="createIssueForm" method="post">
+                <span class="heading">Create issue</span>
+                <div class="form-group">
+                    <input class="form-control" type="text" name="title" placeholder="Title" value="" required>
+                </div>
+                <div class="form-group help">
+                    <input class="form-control" type="text" name="description" placeholder="Description" value="" required>
+                </div>
+                <div class="form-group help">
+                    <select name = "status">
+                        #foreach($status in $statuses)
+                        <option value="$status.getStatus()">$status.getStatus()</option>
+                        #end
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-outline-success btn-sm">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 #end

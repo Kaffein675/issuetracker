@@ -162,13 +162,14 @@ public class Db_operations {
         }
     }
 
-    public static void db_updateIssue(int issue_id, String title, String desc) {
+    public static void db_updateIssue(int issue_id, String title, String desc, String status) {
         try {
-            String query = "update issues set TITLE=?, DESCRIPTION=? where ISSUE_ID=?";
+            String query = "update issues set TITLE=?, DESCRIPTION=?, STATUS=? where ISSUE_ID=?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, title);
             stmt.setString(2, desc);
-            stmt.setInt(3, issue_id);
+            stmt.setString(3, status);
+            stmt.setInt(4, issue_id);
             stmt.executeUpdate();
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();

@@ -19,7 +19,7 @@ public class Main {
         enableDebugScreen();
 
         Db_operations.db_connect();
-        //Db_operations.db_getAllIssues();
+
 
         before("*",            Filters.addTrailingSlashes);
         before("*",            Filters.handleLocaleChange);
@@ -33,8 +33,8 @@ public class Main {
         get(Path.Web.ADD_COMMENT,    Comments.serveAddPage);
         get(Path.Web.EDIT_COMMENT,   Comments.serveEditPage);
 
-        delete(Path.Web.REMOVE_ISSUE,   Issues.removeIssue);
-        delete(Path.Web.REMOVE_COMMENT, Comments.removeComment);
+        get(Path.Web.REMOVE_ISSUE,   Issues.removeIssue);
+        get(Path.Web.REMOVE_COMMENT, Comments.removeComment);
 
         post(Path.Web.LOGIN,         Login.handleLoginPost);
         post(Path.Web.LOGOUT,        Login.handleLogoutPost);

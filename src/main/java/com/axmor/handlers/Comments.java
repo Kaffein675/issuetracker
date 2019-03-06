@@ -44,6 +44,7 @@ public class Comments {
         Db_operations.db_updateComment(Integer.parseInt(getParamId(request).trim()),
                 request.queryParams("content"));
         model.put("issue", Db_operations.db_getIssue(Integer.parseInt(getParamId(request).trim())));
+        model.put("comments", Db_operations.db_getAllComments(Integer.parseInt(getParamId(request).trim())));
         return View.render(request, model, Path.Template.ISSUES_ONE);
     };
 
@@ -52,6 +53,7 @@ public class Comments {
         Map<String, Object> model = new HashMap<>();
         Db_operations.db_removeComment(Integer.parseInt(getParamId(request).trim()));
         model.put("issue", Db_operations.db_getIssue(Integer.parseInt(getParamId(request).trim())));
+        model.put("comments", Db_operations.db_getAllComments(Integer.parseInt(getParamId(request).trim())));
         return View.render(request, model, Path.Template.ISSUES_ONE);
     };
 }

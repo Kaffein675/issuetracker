@@ -6,7 +6,7 @@ public class Path {
     public static class Web {
         @Getter public static final String LOGIN = "/login/";
         @Getter public static final String LOGOUT = "/logout/";
-        @Getter public static final String ISSUES= "/";
+        @Getter public static final String ISSUES= "/issues/";
         @Getter public static final String ONE_ISSUE = "/issue/:id/";
         @Getter public static final String SUBMIT = "/submit/";
         @Getter public static final String ISSUE_EDIT = "/edit/issue/:id/";

@@ -36,13 +36,14 @@ public class Issues {
         model.put("loggedOut", removeSessionAttrLoggedOut(request));
         model.put("loginRedirect", removeSessionAttrLoginRedirect(request));
         model.put("issue", Db_operations.db_getIssue(Integer.parseInt(getParamId(request).trim())));
+        model.put("statuses", Db_operations.db_getStatuses());
         return View.render(request, model, Path.Template.ISSUE_EDIT);
     };
 
     public static Route handleEditPost = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
         Db_operations.db_updateIssue(Integer.parseInt(getParamId(request).trim()), request.queryParams("title"),
-                request.queryParams("description"));
+                request.queryParams("description"), request.queryParams("status"));
         model.put("issue", Db_operations.db_getIssue(Integer.parseInt(getParamId(request).trim())));
         model.put("comments", Db_operations.db_getAllComments(Integer.parseInt(getParamId(request).trim())));
         return View.render(request, model, Path.Template.ISSUES_ONE);

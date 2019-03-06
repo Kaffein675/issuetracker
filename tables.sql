@@ -3,8 +3,8 @@ CREATE TABLE issues(
     title varchar(255) not null,
     description text,
     publishing_date date,
-
     author varchar(255)
+    status varchar(255)
 );
 
 CREATE TABLE comments (
@@ -17,7 +17,6 @@ CREATE TABLE comments (
 
 CREATE TABLE issue_status (
     status_id int primary key AUTO_INCREMENT,
-    issue_id int references issues(issue_id),
     status varchar(255)
 );
 
