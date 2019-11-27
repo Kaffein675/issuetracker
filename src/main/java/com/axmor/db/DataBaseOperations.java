@@ -1,14 +1,14 @@
 package com.axmor.db;
 
-import com.axmor.db.model.Comment_model;
-import com.axmor.db.model.Issue_model;
-import com.axmor.db.model.Status_model;
-import com.axmor.db.model.User;
+import com.axmor.dto.Comment;
+import com.axmor.dto.Issue;
+import com.axmor.dto.Status;
+import com.axmor.dto.User;
 
 import java.sql.*;
 import java.util.*;
 
-public class Db_operations {
+public class DataBaseOperations {
 
     static private final String JDBC_DRIVER = "org.h2.Driver";
     static private final String DB_URL = "jdbc:h2:tcp://localhost/~/test";
@@ -17,7 +17,7 @@ public class Db_operations {
     static private Connection conn = null;
     static private PreparedStatement stmt = null;
 
-    public static void db_connect() {
+    public static void Connect() {
         try {
 
             Class.forName(JDBC_DRIVER);
@@ -29,7 +29,7 @@ public class Db_operations {
         }
     }
 
-    public static void db_disconnect() {
+    public static void Disconnect() {
         try {
             System.out.println("Disconnect from database...");
             stmt.close();
@@ -40,18 +40,18 @@ public class Db_operations {
         }
     }
 
-    public static Iterable<Issue_model> db_getAllIssues(){
+    public static Iterable<Issue> getAllIssues() {
         try {
             String query = "SELECT * FROM ISSUES";
             stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
-            ArrayList<Issue_model> issues = new ArrayList<>();
+            ArrayList<Issue> issues = new ArrayList<>();
             while (rs.next()) {
-                Issue_model issue = new Issue_model();
-                issue.setId(rs.getInt("ISSUE_ID"));
+                Issue issue = new Issue();
+                issue.setIssueId(rs.getInt("ISSUE_ID"));
                 issue.setTitle(rs.getString("TITLE"));
                 issue.setDescription(rs.getString("DESCRIPTION"));
-                issue.setDate(rs.getDate("PUBLISHING_DATE"));
+                issue.setPublishingDate(rs.getDate("PUBLISHING_DATE"));
                 issue.setStatus(rs.getString("STATUS"));
                 issue.setAuthor(rs.getString("AUTHOR"));
                 issues.add(issue);
@@ -63,15 +63,15 @@ public class Db_operations {
         }
     }
 
-    public static Iterable<Status_model> db_getStatuses() {
+    public static Iterable<Status> getStatuses() {
         try {
             String query = "SELECT * FROM ISSUE_STATUS";
             stmt = conn.prepareStatement(query);
-            ArrayList<Status_model> statuses = new ArrayList<>();
+            ArrayList<Status> statuses = new ArrayList<>();
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                Status_model status = new Status_model();
-                status.setStatus_id(rs.getInt("STATUS_ID"));
+                Status status = new Status();
+                status.setStatusId(rs.getInt("STATUS_ID"));
                 status.setStatus(rs.getString("STATUS"));
                 statuses.add(status);
             }
@@ -82,62 +82,61 @@ public class Db_operations {
         }
     }
 
-    public static Iterable<Comment_model> db_getAllComments(int id) {
+    public static Iterable<Comment> getAllComments(int id) {
         try {
             String query = "SELECT * FROM comments where ISSUE_ID=?";
             stmt = conn.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
-            ArrayList<Comment_model> comments = new ArrayList<>();
-            while(rs.next())
-                {
-                    Comment_model comment = new Comment_model();
-                    comment.setId(rs.getInt("COMMENT_ID"));
-                    comment.setIssue_id(rs.getInt("ISSUE_ID"));
-                    comment.setAuthor(rs.getString("AUTHOR"));
-                    comment.setDate(rs.getDate("SUBMISSION_DATE"));
-                    comment.setContent(rs.getString("CONTENT"));
-                    comments.add(comment);
-                }
-            return comments;
-            } catch(SQLException sqlEx){
-                sqlEx.printStackTrace();
-                return null;
+            ArrayList<Comment> comments = new ArrayList<>();
+            while (rs.next()) {
+                Comment comment = new Comment();
+                comment.setCommentId(rs.getInt("COMMENT_ID"));
+                comment.setPostId(rs.getInt("ISSUE_ID"));
+                comment.setAuthor(rs.getString("AUTHOR"));
+                comment.setSubmissionDate(rs.getDate("SUBMISSION_DATE"));
+                comment.setContent(rs.getString("CONTENT"));
+                comments.add(comment);
             }
+            return comments;
+        } catch (SQLException sqlEx) {
+            sqlEx.printStackTrace();
+            return null;
         }
+    }
 
-    public static Comment_model db_getComment(int id) {
+    public static Comment getComment(int id) {
         try {
             String query = "SELECT * FROM comments where COMMENT_ID=?";
             stmt = conn.prepareStatement(query);
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            Comment_model comment = new Comment_model();
-            comment.setId(rs.getInt("ISSUE_ID"));
-            comment.setIssue_id(rs.getInt("ISSUE_ID"));
+            Comment comment = new Comment();
+            comment.setCommentId(rs.getInt("ISSUE_ID"));
+            comment.setPostId(rs.getInt("ISSUE_ID"));
             comment.setAuthor(rs.getString("AUTHOR"));
-            comment.setDate(rs.getDate("SUBMISSION_DATE"));
+            comment.setSubmissionDate(rs.getDate("SUBMISSION_DATE"));
             comment.setContent(rs.getString("CONTENT"));
             return comment;
-        } catch(SQLException sqlEx){
+        } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
             return null;
         }
     }
 
-    public static Issue_model db_getIssue(int issue_id) {
+    public static Issue getIssue(int issueId) {
         try {
             String query = "select * FROM issues WHERE ISSUE_ID=?";
             stmt = conn.prepareStatement(query);
-            stmt.setInt(1, issue_id);
+            stmt.setInt(1, issueId);
             ResultSet rs = stmt.executeQuery();
-            Issue_model issue = new Issue_model();
+            Issue issue = new Issue();
             rs.next();
-            issue.setId(issue_id);
+            issue.setIssueId(issueId);
             issue.setTitle(rs.getString("TITLE"));
             issue.setDescription(rs.getString("DESCRIPTION"));
-            issue.setDate(rs.getDate("PUBLISHING_DATE"));
+            issue.setPublishingDate(rs.getDate("PUBLISHING_DATE"));
             issue.setStatus(rs.getString("STATUS"));
             issue.setAuthor(rs.getString("AUTHOR"));
             return issue;
@@ -147,7 +146,7 @@ public class Db_operations {
         }
     }
 
-    public static void db_createIssue(String title, String desc, String author, String status) {
+    public static void createIssue(String title, String desc, String author, String status) {
         try {
             String query = "INSERT INTO issues (TITLE,DESCRIPTION,PUBLISHING_DATE, AUTHOR, STATUS) VALUES (?,?,?,?,?)";
             stmt = conn.prepareStatement(query);
@@ -162,36 +161,36 @@ public class Db_operations {
         }
     }
 
-    public static void db_updateIssue(int issue_id, String title, String desc, String status) {
+    public static void updateIssue(int issueId, String title, String desc, String status) {
         try {
             String query = "update issues set TITLE=?, DESCRIPTION=?, STATUS=? where ISSUE_ID=?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, title);
             stmt.setString(2, desc);
             stmt.setString(3, status);
-            stmt.setInt(4, issue_id);
+            stmt.setInt(4, issueId);
             stmt.executeUpdate();
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         }
     }
 
-    public static void db_removeIssue(int issue_id) {
+    public static void removeIssue(int issueId) {
         try {
             String query = "DELETE FROM issues WHERE ISSUE_ID=?";
             stmt = conn.prepareStatement(query);
-            stmt.setInt(1, issue_id);
+            stmt.setInt(1, issueId);
             stmt.executeUpdate();
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         }
     }
 
-    public static void db_createComment(int issue_id, String author, String content) {
+    public static void createComment(int issueId, String author, String content) {
         try {
             String query = "INSERT INTO comments (ISSUE_ID, AUTHOR, CONTENT, SUBMISSION_DATE) VALUES (?,?,?,?)";
             stmt = conn.prepareStatement(query);
-            stmt.setInt(1, issue_id);
+            stmt.setInt(1, issueId);
             stmt.setString(2, author);
             stmt.setString(3, content);
             stmt.setDate(4, new java.sql.Date(java.util.Calendar.getInstance().getTime().getTime()));
@@ -201,41 +200,41 @@ public class Db_operations {
         }
     }
 
-    public static void db_updateComment(int comment_id, String content) {
+    public static void updateComment(int commentId, String content) {
         try {
             String query = "update COMMENTS set CONTENT=? where Comment_ID=?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, content);
-            stmt.setInt(2, comment_id);
+            stmt.setInt(2, commentId);
             stmt.executeUpdate();
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         }
     }
 
-    public static void db_removeComment(int comment_id) {
+    public static void removeComment(int commentId) {
         try {
             String query = "DELETE FROM comments WHERE comment_ID=?";
             stmt = conn.prepareStatement(query);
-            stmt.setInt(1, comment_id);
+            stmt.setInt(1, commentId);
             stmt.executeUpdate();
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
         }
     }
 
-    public static User db_getUser(String user_name) {
+    public static User getUser(String userName) {
         try {
             String query = "select * FROM users WHERE USER_NAME=?";
             stmt = conn.prepareStatement(query);
-            stmt.setString(1, user_name);
+            stmt.setString(1, userName);
             ResultSet rs = stmt.executeQuery();
             rs.next();
             User user = new User();
-            user.setUser_id(rs.getInt("USER_ID"));
-            user.setUser_name(rs.getString("USER_NAME"));
+            user.setUserId(rs.getInt("USER_ID"));
+            user.setUserName(rs.getString("USER_NAME"));
             user.setSalt(rs.getString("SALT"));
-            user.setHash_pass(rs.getString("HASH_PASS"));
+            user.setHashPass(rs.getString("HASH_PASS"));
             return user;
         } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
@@ -243,15 +242,15 @@ public class Db_operations {
         }
     }
 
-    public static void db_createUser(String user_name, String salt, String hash_pass) {
+    public static void createUser(String userName, String salt, String hashPass) {
         try {
             String query = "INSERT INTO users (USER_NAME, SALT, HASH_PASS) VALUES (?,?,?)";
             stmt = conn.prepareStatement(query);
-            stmt.setString(1, user_name);
+            stmt.setString(1, userName);
             stmt.setString(2, salt);
-            stmt.setString(3, hash_pass);
+            stmt.setString(3, hashPass);
             stmt.executeUpdate();
-        }catch (SQLException sqlEx) {
+        } catch (SQLException sqlEx) {
             sqlEx.printStackTrace();
 
         }

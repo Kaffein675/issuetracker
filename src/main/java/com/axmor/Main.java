@@ -1,6 +1,6 @@
 package com.axmor;
 
-import com.axmor.db.Db_operations;
+import com.axmor.db.DataBaseOperations;
 import com.axmor.utils.*;
 import com.axmor.handlers.*;
 import static spark.Spark.*;
@@ -18,7 +18,7 @@ public class Main {
         staticFiles.expireTime(600L);
         enableDebugScreen();
 
-        Db_operations.db_connect();
+        DataBaseOperations.Connect();
 
 
         before("*",            Filters.addTrailingSlashes);

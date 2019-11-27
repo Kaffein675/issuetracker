@@ -1,8 +1,8 @@
 package com.axmor.handlers;
 
 
-import com.axmor.db.Db_operations;
-import com.axmor.db.model.User;
+import com.axmor.db.DataBaseOperations;
+import com.axmor.dto.User;
 import com.axmor.utils.Path;
 import com.axmor.utils.View;
 import org.mindrot.jbcrypt.BCrypt;
@@ -33,10 +33,10 @@ public class Login {
 
     public static Route handleUserCreate = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        if(Db_operations.db_getUser(getQueryUsername(request)) == null) {
+        if(DataBaseOperations.getUser(getQueryUsername(request)) == null) {
             createUser(getQueryUsername(request), getQueryPassword(request));
         }
-        if (!authenticate(getQueryUsername(request), getQueryPassword(request))) {
+        if (authenticate(getQueryUsername(request), getQueryPassword(request))) {
             model.put("authenticationFailed", true);
             return View.render(request, model, Path.Template.LOGIN);
         }
@@ -50,7 +50,7 @@ public class Login {
 
     public static Route handleLoginPost = (Request request, Response response) -> {
         Map<String, Object> model = new HashMap<>();
-        if (!authenticate(getQueryUsername(request), getQueryPassword(request))) {
+        if (authenticate(getQueryUsername(request), getQueryPassword(request))) {
             model.put("authenticationFailed", true);
             return View.render(request, model, Path.Template.LOGIN);
         }
@@ -59,7 +59,6 @@ public class Login {
         if (getQueryLoginRedirect(request) != null) {
             response.redirect(getQueryLoginRedirect(request));
         }
-        //model.put("issues", Db_operations.db_getAllIssues());
         return View.render(request, model, Path.Template.LOGIN);
     };
 
@@ -80,19 +79,19 @@ public class Login {
 
     private static boolean authenticate(String username, String password){
         if (username.isEmpty() || password.isEmpty()) {
-            return false;
+            return true;
         }
-        User user = Db_operations.db_getUser(username);
+        User user = DataBaseOperations.getUser(username);
         if (user == null) {
-            return false;
+            return true;
         }
         String hashedPassword = BCrypt.hashpw(password, user.getSalt());
-        return hashedPassword.equals(user.getHash_pass());
+        return !hashedPassword.equals(user.getHashPass());
     }
 
     private static void createUser(String username, String Password) {
         String newSalt = BCrypt.gensalt();
         String newHashedPassword = BCrypt.hashpw(Password, newSalt);
-        Db_operations.db_createUser(username, newSalt, newHashedPassword);
+        DataBaseOperations.createUser(username, newSalt, newHashedPassword);
     }
 }
