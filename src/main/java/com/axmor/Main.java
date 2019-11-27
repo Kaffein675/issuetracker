@@ -1,6 +1,5 @@
 package com.axmor;
 
-import com.axmor.db.DataBaseOperations;
 import com.axmor.utils.*;
 import com.axmor.handlers.*;
 import static spark.Spark.*;
@@ -8,18 +7,12 @@ import static spark.debug.DebugScreen.enableDebugScreen;
 
 
 public class Main {
-
-
-
     public static void main(String[] args){
         exception(Exception.class, (e, req, res) -> e.printStackTrace());
         port(80);
         staticFiles.location("/public");
         staticFiles.expireTime(600L);
         enableDebugScreen();
-
-        DataBaseOperations.Connect();
-
 
         before("*",            Filters.addTrailingSlashes);
         before("*",            Filters.handleLocaleChange);

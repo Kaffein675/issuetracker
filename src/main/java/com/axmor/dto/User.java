@@ -1,11 +1,15 @@
 package com.axmor.dto;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class User {
-    private int userId;
-    private String userName;
-    private String salt;
-    private String hashPass;
+    int userId;
+    String userName;
+    String salt;
+    String hashPass;
 }

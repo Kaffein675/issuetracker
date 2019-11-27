@@ -1,10 +1,14 @@
 package com.axmor.dto;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.sql.Date;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Comment {
     int commentId;
     int postId;

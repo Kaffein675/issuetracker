@@ -1,15 +1,19 @@
 package com.axmor.dto;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.sql.Date;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Issue {
-    private int issueId;
-    private String title;
-    private String description;
-    private Date publishingDate;
-    private String status;
-    private String author;
+    int issueId;
+    String title;
+    String description;
+    Date publishingDate;
+    String status;
+    String author;
 }

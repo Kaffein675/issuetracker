@@ -1,9 +1,13 @@
 package com.axmor.dto;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Status {
-    private int statusId;
-    private String status;
+    int statusId;
+    String status;
 }
